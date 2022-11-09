@@ -1,4 +1,9 @@
-com\zalander\app\Main.class
+com\zalander\app\Constants.class
+com\zalander\app\Player$2.class
+com\zalander\app\Player$PlaybackTimer.class
 com\zalander\app\RGB.class
+com\zalander\app\Main.class
+com\zalander\app\Player$1.class
 com\zalander\app\ImageConverter.class
+com\zalander\app\Player.class
 com\zalander\app\Point.class

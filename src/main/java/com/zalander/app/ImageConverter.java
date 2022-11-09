@@ -25,10 +25,10 @@ public class ImageConverter {
     private char blockToAscii(ArrayList<ArrayList<Point>> block, BufferedImage image) {
         RGB rgb = getRGBAverageBlock(block, image);
         char[] charArr = {
-            '#',
-            '%',
-            '&',
-            '/',
+            '█',
+            '▓',
+            '░',
+            ':',
             '.',
             ' '
         };
@@ -108,13 +108,16 @@ public class ImageConverter {
 
     // function to get all coordinates
     private ArrayList<ArrayList<Point>> math(int width, int height) {
+        int videoWidth = Constants.videoWidth;
+        int videoHeight = Constants.videoHeight;
+
         // woo i love java!!!!!
         ArrayList<ArrayList<Point>> res = new ArrayList<ArrayList<Point>>();
-        for (int y = 0; y < 50; y++) {
+        for (int y = 0; y < videoHeight; y++) {
             ArrayList<Point> arr = new ArrayList<Point>();
-            int ypos = (int)((double)((double)y / 50) * height);
-            for (int x = 0; x < 100; x++) {
-                int xpos = (int)((double)((double)x / 100) * width);
+            int ypos = (int)((double)((double)y / videoHeight) * height);
+            for (int x = 0; x < videoWidth; x++) {
+                int xpos = (int)((double)((double)x / videoWidth) * width);
                 arr.add(new Point(xpos, ypos));
             }
             res.add(arr);

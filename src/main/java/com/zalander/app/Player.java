@@ -8,13 +8,13 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Application;
-import javafx.application.Platform;
+// import javafx.application.Application;
+// import javafx.application.Platform;
 // import javafx.scene.Scene;
 // import javafx.scene.image.Image;
 // import javafx.scene.image.ImageView;
 // import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
+// import javafx.stage.Stage;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
@@ -26,7 +26,7 @@ import org.bytedeco.javacv.Java2DFrameConverter;
  * @author Dmitriy Gerashenko <d.a.gerashenko@gmail.com>
  * @author Jarek Sacha
  */
-public class Player extends Application {
+public class Player {
 
     private static class PlaybackTimer {
         private Long startTime = -1L;
@@ -60,14 +60,13 @@ public class Player extends Application {
 
     private static final Logger LOG = Logger.getLogger(Player.class.getName());
 
-    private static volatile Thread playThread;
+    // private static volatile Thread playThread;
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+    // public static void main(String[] args) {
+    //     launch(args);
+    // }
 
-    @Override
-    public void start(final Stage primaryStage) throws Exception {
+    public void start(String filename) throws Exception {
         // final StackPane root = new StackPane();
         // final ImageView imageView = new ImageView();
 
@@ -81,10 +80,10 @@ public class Player extends Application {
         // primaryStage.setScene(scene);
         // primaryStage.show();
 
-        playThread = new Thread(new Runnable() { public void run() {
+        // playThread = new Thread(new Runnable() { public void run() {
             try {
                 // final String videoFilename = getParameters().getRaw().get(0);
-                final FFmpegFrameGrabber grabber = new FFmpegFrameGrabber("./bad-apple!!.mp4");
+                final FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(filename);
                 grabber.start();
                 // primaryStage.setWidth(grabber.getImageWidth());
                 // primaryStage.setHeight(grabber.getImageHeight());
@@ -179,7 +178,8 @@ public class Player extends Application {
                     Thread.sleep(Math.max(0, delay));
                 }
                 grabber.stop();
-                grabber.release();
+                grabber.close();
+                converter.close();
                 if (soundLine != null) {
                     soundLine.stop();
                 }
@@ -188,18 +188,17 @@ public class Player extends Application {
                 imageExecutor.shutdownNow();
                 imageExecutor.awaitTermination(10, TimeUnit.SECONDS);
 
-                Platform.exit();
+                // Platform.exit();
             } catch (Exception exception) {
                 LOG.log(Level.SEVERE, null, exception);
                 System.exit(1);
             }
-        }});
-        playThread.start();
+        // }});
+        // playThread.start();
     }
 
-    @Override
-    public void stop() {
-        playThread.interrupt();
-    }
+    // public void stop() {
+    //     playThread.interrupt();
+    // }
 
 }
